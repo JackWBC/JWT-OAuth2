@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author baicheng
@@ -46,14 +49,18 @@ public class MyAuthorizationServerConfig extends AuthorizationServerConfigurerAd
     }
 
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(){
+    public JwtAccessTokenConverter jwtAccessTokenConverter() throws NoSuchAlgorithmException {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("secret");
+
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        converter.setKeyPair(keyPair);
+
         return converter;
     }
 
     @Bean
-    public JwtTokenStore jwtTokenStore(){
+    public JwtTokenStore jwtTokenStore() throws NoSuchAlgorithmException {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
