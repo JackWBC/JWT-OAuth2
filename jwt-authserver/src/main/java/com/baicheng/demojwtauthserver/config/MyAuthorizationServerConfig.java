@@ -1,6 +1,7 @@
 package com.baicheng.demojwtauthserver.config;
 
 import com.baicheng.demojwtauthserver.service.MyUserDetailsService;
+import com.baicheng.demojwtauthserver.util.MyKeyPairUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -19,7 +20,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -49,12 +49,20 @@ public class MyAuthorizationServerConfig extends AuthorizationServerConfigurerAd
     }
 
     @Bean
+    public KeyPair jwtKeyPair(){
+        return MyKeyPairUtil.gennerateKeyPair("RSA");
+    }
+
+    @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() throws NoSuchAlgorithmException {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+//        asymmetric encryption 非对称加密
+        KeyPair keyPair = jwtKeyPair();
         converter.setKeyPair(keyPair);
+
+//        symmetrical encryption 对称加密
+//        converter.setSigningKey("secret");
 
         return converter;
     }

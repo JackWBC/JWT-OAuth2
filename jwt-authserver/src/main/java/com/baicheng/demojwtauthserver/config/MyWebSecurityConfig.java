@@ -61,6 +61,8 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                         )
                 .permitAll()
+                .antMatchers("/jwt/publicKey")
+                .permitAll()
                 .antMatchers("/home").permitAll()
                 .anyRequest().authenticated()
                 .and()
