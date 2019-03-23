@@ -2,6 +2,7 @@ package com.baicheng.demojwtauthserver.config;
 
 import com.baicheng.demojwtauthserver.service.MyUserDetailsService;
 import com.baicheng.demojwtauthserver.util.MyKeyPairUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -29,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
  */
 @Configuration
 @EnableAuthorizationServer
+@Slf4j
 public class MyAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -50,7 +52,12 @@ public class MyAuthorizationServerConfig extends AuthorizationServerConfigurerAd
 
     @Bean
     public KeyPair jwtKeyPair(){
-        return MyKeyPairUtil.gennerateKeyPair("RSA");
+        KeyPair keyPair = MyKeyPairUtil.gennerateKeyPair("RSA");
+        log.info("------------ JWT KeyPair -------------");
+        log.info("Public key: {}", MyKeyPairUtil.getPublicKey(keyPair));
+        log.info("Private key: {}", MyKeyPairUtil.getPrivateKey(keyPair));
+        log.info("------------     end     -------------");
+        return keyPair;
     }
 
     @Bean
