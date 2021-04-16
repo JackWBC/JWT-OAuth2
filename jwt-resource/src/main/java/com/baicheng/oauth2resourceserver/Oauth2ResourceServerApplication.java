@@ -21,7 +21,6 @@ import java.util.Collections;
 
 @SpringBootApplication
 @Configuration
-@EnableAutoConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @MapperScan("com.baicheng.oauth2resourceserver.mapper")
 public class Oauth2ResourceServerApplication {

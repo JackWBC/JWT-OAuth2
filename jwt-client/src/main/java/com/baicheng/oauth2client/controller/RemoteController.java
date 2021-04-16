@@ -26,7 +26,13 @@ public class RemoteController {
     public ResponseEntity<String> getAllProducts(
             @RequestParam(value = "code", required = false) String code, @RequestParam(value = "state", required = false) String state
     ){
+        log.info("[RemoteController getAllProducts] invoke log, code: {}, state: {}", code, state);
+
         String object = oAuth2RestOperations.getForObject("http://localhost:8002/product/all", String.class);
+
+        log.info("[RemoteController getAllProducts] oAuth2RestOperations invoke, url: {}, resp: {}",
+                "http://localhost:8002/product/all", object);
+
         return ResponseEntity.ok(object);
     }
 

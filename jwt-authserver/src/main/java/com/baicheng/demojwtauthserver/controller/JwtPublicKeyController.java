@@ -10,6 +10,8 @@ import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author baicheng
  * @description
@@ -17,6 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/jwt")
+@Slf4j
 public class JwtPublicKeyController {
 
     @Autowired
@@ -28,6 +31,9 @@ public class JwtPublicKeyController {
         String verifierKey = "-----BEGIN PUBLIC KEY-----\n" + MyKeyPairUtil.getPublicKey(jwtKeyPair)
                 + "\n-----END PUBLIC KEY-----";
         map.put("value", verifierKey);
+
+        log.info("[JwtPublicKeyController] getJwtPublicKey: {}", verifierKey);
+
         return map;
     }
 }

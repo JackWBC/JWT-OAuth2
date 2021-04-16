@@ -6,3 +6,5 @@
 ## 客户端 jwt-client
 ## 授权服务器 jwt-authserver
 ## 资源服务器 jwt-resource
+
+PS: 数据库里用户密码是加过密的, 测试用户名/密码 用baicheng/1111

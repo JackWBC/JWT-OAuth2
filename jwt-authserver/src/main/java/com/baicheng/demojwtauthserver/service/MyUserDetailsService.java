@@ -9,16 +9,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author baicheng
  * @description
  * @create 2019-03-10 18:53
  */
 @Service
+@Slf4j
 public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
+        log.info("[MyUserDetailsService loadUserByUsername] invoke log, username: {}", s);
 
         //TODO 写死测试
         if (!"baicheng".equals(s)){

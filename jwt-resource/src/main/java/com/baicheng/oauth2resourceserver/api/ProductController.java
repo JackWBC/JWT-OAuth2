@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author baicheng
  * @description
@@ -20,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/product")
+@Slf4j
 public class ProductController {
 
     @Autowired
@@ -34,7 +37,11 @@ public class ProductController {
     @RequestMapping("/all")
     public String findAll(){
         List<ProductBO> products = productService.getAllProducts();
-        return JSON.toJSONString(products);
+
+        String res = JSON.toJSONString(products);
+        log.info("[ProductController findAll] invoke log, products: {}", res);
+
+        return res;
     }
 
 //    @RequestMapping("/{id}")

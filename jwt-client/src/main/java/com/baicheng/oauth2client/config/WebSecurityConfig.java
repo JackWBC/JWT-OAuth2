@@ -35,6 +35,7 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Arrays;
 
@@ -70,21 +71,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public OAuth2ProtectedResourceDetails resourceDetails() {
 
 //        --------------- authorization_code --------------
-//        AuthorizationCodeResourceDetails resource = new AuthorizationCodeResourceDetails();
-//        resource.setClientId("oauth2_client");
-//        resource.setClientSecret("1111");
-//        resource.setAccessTokenUri("http://localhost:8001/oauth/token");
-//        resource.setUserAuthorizationUri("http://localhost:8001/oauth/authorize");
-//        resource.setScope(Arrays.asList("read"));
-//        return resource;
-
-//        ---------------- client_credentials ------------------
-        ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
+        AuthorizationCodeResourceDetails resource = new AuthorizationCodeResourceDetails();
         resource.setClientId("oauth2_client");
         resource.setClientSecret("1111");
         resource.setAccessTokenUri("http://localhost:8001/oauth/token");
+        resource.setUserAuthorizationUri("http://localhost:8001/oauth/authorize");
         resource.setScope(Arrays.asList("read"));
         return resource;
+
+//        ---------------- client_credentials ------------------
+//        ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
+//        resource.setClientId("oauth2_client");
+//        resource.setClientSecret("1111");
+//        resource.setAccessTokenUri("http://localhost:8001/oauth/token");
+//        resource.setScope(Arrays.asList("read"));
+//        return resource;
 
 //        ---------------- implicit ------------------
 //        说明, implicit模式下, 实际上由user-agent即浏览器代替client去和认证服务器进行交互, 当拿到令牌后再经 client 向 资源服务器发出请求
@@ -107,7 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return resource;
     }
 
-    @Autowired
+    @Resource
     private OAuth2ClientContext oAuth2ClientContext;
 
     @Bean
